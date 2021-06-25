@@ -13,4 +13,3 @@
 ?>
 <img class="lpay_snippet" src="<?php echo $snippetUrl ?>?amount=<?php echo $this->getAmount(); ?><?php echo $fullBlock; ?><?php echo $paymentTerm; ?>"
      alt="<?php echo $this->getTitle(); ?>"/>
-
