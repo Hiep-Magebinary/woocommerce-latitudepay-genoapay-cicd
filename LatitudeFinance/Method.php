@@ -24,10 +24,10 @@
  * @copyright   Copyright (c) 2020 LatitudeFinance (https://www.latitudefinancial.com.au/)
  * @license     http://www.apache.org/licenses/LICENSE-2.0
  */
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
-if (!class_exists('WC_Payment_Gateway')) {
-    return;
+if ( ! class_exists( 'WC_Payment_Gateway' ) ) {
+	return;
 }
 
 abstract class WC_LatitudeFinance_Method_Abstract extends WC_Payment_Gateway

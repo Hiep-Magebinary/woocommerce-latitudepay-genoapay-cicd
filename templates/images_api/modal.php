@@ -4,7 +4,7 @@
  */
 ?>
 <script>
-    !function () {
+!function () {
         var e = document.querySelectorAll("img[src*='<?php echo $this->getImagesApiUrl(); ?>snippet.svg'], img[src*='<?php echo $this->getImagesApiUrl(); ?>api/banner'], img[src*='<?php echo $this->getImagesApiUrl(); ?>LatitudePayPlusSnippet.svg']");
         [].forEach.call(
             e, function (e) {

@@ -25,10 +25,10 @@
  * @license     http://www.apache.org/licenses/LICENSE-2.0
  */
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
-if (!class_exists('WC_LatitudeFinance_Method_Abstract')) {
-    return;
+if ( ! class_exists( 'WC_LatitudeFinance_Method_Abstract' ) ) {
+	return;
 }
 
 /**
