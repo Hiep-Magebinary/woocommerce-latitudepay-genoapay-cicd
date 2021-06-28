@@ -451,81 +451,7 @@ abstract class WC_LatitudeFinance_Method_Abstract extends WC_Payment_Gateway
         /**
          * Display the following options as the backend settings
          */
-        $this->form_fields = array(
-            'enabled' => array(
-                'title' => __('Enable/Disable Plugin', 'woocommerce-payment-gateway-latitudefinance'),
-                'type' => 'checkbox',
-                'label' => __('Enable', 'woocommerce-payment-gateway-latitudefinance'),
-                'default' => 'no'
-            ),
-            'lpay_plus_enabled' => array(
-                'title' => __('LatitudePay+ Presentment', 'woocommerce-payment-gateway-latitudefinance'),
-                'type' => 'checkbox',
-                'label' => __('Enable LatitudePay+ Presentment', 'woocommerce-payment-gateway-latitudefinance'),
-                'description' => __('Enable this option to display LatitudePay+ content on your site if you are offering LatitudePay+.', 'woocommerce-payment-gateway-latitudefinance'),
-                'default' => 'yes',
-                'disabled'      => $this->get_id() !== WC_LatitudeFinance_Method_Latitudepay::METHOD_LATITUDEPAY,
-            ),
-            'lpay_plus_payment_term' => array(
-                'title' => __('LatitudePay+ Payment Term', 'woocommerce-payment-gateway-latitudefinance'),
-                'type' => 'multiselect',
-                'label' => __('Enable LatitudePay+ Payment Term', 'woocommerce-payment-gateway-latitudefinance'),
-                'description' => __('The amount of weeks that the payment will be split to', 'woocommerce-payment-gateway-latitudefinance'),
-                'options' => [
-                    '6' => __('6 months' ,'woocommerce-payment-gateway-latitudefinance'),
-                    '12' => __('12 months' ,'woocommerce-payment-gateway-latitudefinance'),
-                    '18' => __('18 months' ,'woocommerce-payment-gateway-latitudefinance'),
-                    '24' => __('24 months' ,'woocommerce-payment-gateway-latitudefinance'),
-                ],
-                'default' => '12',
-                'disabled'      => $this->get_option('lpay_plus_enabled') !== 'yes',
-            ),
-            'title' => array(
-                'title' => __('Title', 'woocommerce-payment-gateway-latitudefinance'),
-                'type' => 'text',
-                'description' => __('This controls the title which the user sees during checkout.', 'woocommerce-payment-gateway-latitudefinance'),
-                'default' => __('GenoaPay', 'woocommerce-payment-gateway-latitudefinance'),
-                'desc_tip' => true
-            ),
-            'description' => array(
-                'title' => __('Customer Message', 'woocommerce-payment-gateway-latitudefinance'),
-                'type' => 'textarea',
-                'default' => __($this->description, 'woocommerce-payment-gateway-latitudefinance'),
-                'value' => __($this->description, 'woocommerce-payment-gateway-latitudefinance'),
-                'readonly' => true,
-                'disabled' => true,
-                'desc_tip' => 'This option can be set from your account portal. When the Save Changes button is clicked, this option will update automatically.'
-            ),
-            'min_order_total' => array(
-                'title' => __('Minimum Order Total', 'woocommerce-payment-gateway-latitudefinance'),
-                'type' => 'text',
-                'value' => $this->min_order_total,
-                'default' => $this->min_order_total,
-                'readonly' => $this->get_option('lpay_plus_enabled') !== 'yes',
-                'disabled' => $this->get_option('lpay_plus_enabled') !== 'yes',
-                'desc_tip' => 'This option can be set from your account portal. When the Save Changes button is clicked, this option will update automatically.'
-            ),
-            'max_order_total' => array(
-                'title' => __('', 'woocommerce-payment-gateway-latitudefinance'),
-                'type' => 'text',
-                'value' => $this->max_order_total,
-                'default' => $this->max_order_total,
-                'disabled' => true,
-                'css' => 'display:none'
-            ),
-            'debug_mode' => array(
-                'title' => esc_html__('Debug Mode', 'woocommerce-payment-gateway-latitudefinance'),
-                'type' => 'select',
-                /* translators: Placeholders: %1$s - <a> tag, %2$s - </a> tag */
-                'desc' => sprintf(esc_html__('Show Detailed Error Messages and API requests/responses on the checkout page and/or save them to the %1$sdebug log%2$s',
-                    'woocommerce-payment-gateway-latitudefinance'), '<a href="' . '#link' . '">', '</a>'),
-                'default' => self::DEBUG_MODE_OFF,
-                'options' => array(
-                    self::DEBUG_MODE_OFF => esc_html__('Off', 'woocommerce-payment-gateway-latitudefinance'),
-                    self::DEBUG_MODE_LOG => esc_html__('Save to Log', 'woocommerce-payment-gateway-latitudefinance'),
-                )
-            )
-        );
+        $this->form_fields = $this->getFormFields();
 
         // add unique method fields added by concrete gateway class
         $gateway_form_fields = $this->get_gateway_form_fields();
@@ -1029,5 +955,87 @@ abstract class WC_LatitudeFinance_Method_Abstract extends WC_Payment_Gateway
             return $orderTotal >= $this->min_order_total;
         }
         return true;
+    }
+
+    /**
+     * Get Payment method page form fields
+     * @return array[]
+     */
+    private function getFormFields() {
+        return [
+            'enabled' => array(
+                'title' => __('Enable/Disable Plugin', 'woocommerce-payment-gateway-latitudefinance'),
+                'type' => 'checkbox',
+                'label' => __('Enable', 'woocommerce-payment-gateway-latitudefinance'),
+                'default' => 'no'
+            ),
+            'lpay_plus_enabled' => array(
+                'title' => __('LatitudePay+ Presentment', 'woocommerce-payment-gateway-latitudefinance'),
+                'type' => 'checkbox',
+                'label' => __('Enable LatitudePay+ Presentment', 'woocommerce-payment-gateway-latitudefinance'),
+                'description' => __('Enable this option to display LatitudePay+ content on your site if you are offering LatitudePay+.', 'woocommerce-payment-gateway-latitudefinance'),
+                'default' => 'yes',
+                'disabled'      => $this->get_id() !== WC_LatitudeFinance_Method_Latitudepay::METHOD_LATITUDEPAY,
+            ),
+            'lpay_plus_payment_term' => array(
+                'title' => __('LatitudePay+ Payment Term', 'woocommerce-payment-gateway-latitudefinance'),
+                'type' => 'multiselect',
+                'label' => __('Enable LatitudePay+ Payment Term', 'woocommerce-payment-gateway-latitudefinance'),
+                'description' => __('The amount of weeks that the payment will be split to', 'woocommerce-payment-gateway-latitudefinance'),
+                'options' => [
+                    '6' => __('6 months' ,'woocommerce-payment-gateway-latitudefinance'),
+                    '12' => __('12 months' ,'woocommerce-payment-gateway-latitudefinance'),
+                    '18' => __('18 months' ,'woocommerce-payment-gateway-latitudefinance'),
+                    '24' => __('24 months' ,'woocommerce-payment-gateway-latitudefinance'),
+                ],
+                'default' => '12',
+                'disabled'      => $this->get_option('lpay_plus_enabled') !== 'yes',
+            ),
+            'title' => array(
+                'title' => __('Title', 'woocommerce-payment-gateway-latitudefinance'),
+                'type' => 'text',
+                'description' => __('This controls the title which the user sees during checkout.', 'woocommerce-payment-gateway-latitudefinance'),
+                'default' => __('GenoaPay', 'woocommerce-payment-gateway-latitudefinance'),
+                'desc_tip' => true
+            ),
+            'description' => array(
+                'title' => __('Customer Message', 'woocommerce-payment-gateway-latitudefinance'),
+                'type' => 'textarea',
+                'default' => __($this->description, 'woocommerce-payment-gateway-latitudefinance'),
+                'value' => __($this->description, 'woocommerce-payment-gateway-latitudefinance'),
+                'readonly' => true,
+                'disabled' => true,
+                'desc_tip' => 'This option can be set from your account portal. When the Save Changes button is clicked, this option will update automatically.'
+            ),
+            'min_order_total' => array(
+                'title' => __('Minimum Order Total', 'woocommerce-payment-gateway-latitudefinance'),
+                'type' => 'text',
+                'value' => $this->min_order_total,
+                'default' => $this->min_order_total,
+                'readonly' => $this->get_option('lpay_plus_enabled') !== 'yes',
+                'disabled' => $this->get_option('lpay_plus_enabled') !== 'yes',
+                'desc_tip' => 'This option can be set from your account portal. When the Save Changes button is clicked, this option will update automatically.'
+            ),
+            'max_order_total' => array(
+                'title' => __('', 'woocommerce-payment-gateway-latitudefinance'),
+                'type' => 'text',
+                'value' => $this->max_order_total,
+                'default' => $this->max_order_total,
+                'disabled' => true,
+                'css' => 'display:none'
+            ),
+            'debug_mode' => array(
+                'title' => esc_html__('Debug Mode', 'woocommerce-payment-gateway-latitudefinance'),
+                'type' => 'select',
+                /* translators: Placeholders: %1$s - <a> tag, %2$s - </a> tag */
+                'desc' => sprintf(esc_html__('Show Detailed Error Messages and API requests/responses on the checkout page and/or save them to the %1$sdebug log%2$s',
+                    'woocommerce-payment-gateway-latitudefinance'), '<a href="' . '#link' . '">', '</a>'),
+                'default' => self::DEBUG_MODE_OFF,
+                'options' => array(
+                    self::DEBUG_MODE_OFF => esc_html__('Off', 'woocommerce-payment-gateway-latitudefinance'),
+                    self::DEBUG_MODE_LOG => esc_html__('Save to Log', 'woocommerce-payment-gateway-latitudefinance'),
+                )
+            )
+        ];
     }
 }
