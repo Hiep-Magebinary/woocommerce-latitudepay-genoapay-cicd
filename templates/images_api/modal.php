@@ -4,7 +4,7 @@
  */
 ?>
 <script>
-	!function () {
+!function () {
 		var e = document.querySelectorAll("img[src*='<?php echo $this->getImagesApiUrl(); ?>snippet.svg'], img[src*='<?php echo $this->getImagesApiUrl(); ?>api/banner'], img[src*='<?php echo $this->getImagesApiUrl(); ?>LatitudePayPlusSnippet.svg']");
 		[].forEach.call(
 			e, function (e) {
@@ -18,7 +18,7 @@
 					4 == t.readyState && 200 == t.status && null != t.responseText && (document.body.insertAdjacentHTML("beforeend", t.responseText),
 						document.querySelector(".lpay-modal-wrapper").style.display = "block")
 				},
-					t.open("GET", "<?php echo $this->getImagesApiUrl(); ?>modal.html", !0),
+					t.open("GET", "<?php echo $this->getImagesApiUrl(); ?>modal.html?lpay_plus=<?php echo $this->isLpayPlusEnabled() ? '1' : '0'; ?>", !0),
 					t.send(null)
 			} else document.querySelector(".lpay-modal-wrapper").style.display = "block"
 		}

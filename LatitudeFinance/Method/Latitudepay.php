@@ -78,6 +78,16 @@ class WC_LatitudeFinance_Method_Latitudepay extends WC_LatitudeFinance_Method_Ab
 	private $isFullBlock = false;
 
 	/**
+	 * @var bool
+	 */
+	private $isLpayPlusEnabled;
+
+	/**
+	 * @var string
+	 */
+	private $paymentTerm;
+
+	/**
 	 * WC_LatitudeFinance_Method_Latitudepay constructor.
 	 */
 	public function __construct() {
@@ -104,6 +114,8 @@ class WC_LatitudeFinance_Method_Latitudepay extends WC_LatitudeFinance_Method_Ab
 		add_action( 'wp_footer', array( $this, 'latitudepay_footer_modal_script' ) );
 
 		parent::__construct();
+		$this->isLpayPlusEnabled = isset( $this->settings['lpay_plus_enabled'] ) && $this->settings['lpay_plus_enabled'] === 'yes';
+		$this->paymentTerm       = $this->isLpayPlusEnabled ? $this->settings['lpay_plus_payment_term'] : null;
 	}
 
 	/**
@@ -163,10 +175,17 @@ class WC_LatitudeFinance_Method_Latitudepay extends WC_LatitudeFinance_Method_Ab
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function isLpayPlusEnabled() {
+		return $this->isLpayPlusEnabled;
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getSnippetPath() {
-		return 'snippet.svg';
+		return $this->isLpayPlusEnabled ? 'LatitudePayPlusSnippet.svg' : 'snippet.svg';
 	}
 
 	/**
@@ -190,5 +209,12 @@ class WC_LatitudeFinance_Method_Latitudepay extends WC_LatitudeFinance_Method_Ab
 	 */
 	public function getAmount() {
 		return $this->amount;
+	}
+
+	/**
+	 * @return mixed|string|null
+	 */
+	public function getPaymentTerm() {
+		return $this->paymentTerm;
 	}
 }

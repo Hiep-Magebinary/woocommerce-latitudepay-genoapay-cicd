@@ -166,10 +166,7 @@ abstract class BinaryPay extends WC_LatitudeFinance_Base implements GatewayInter
 				$args = $this->toJson( $args );
 				break;
 			case 'xml':
-				// $args = $this->toXml($args);
-				break;
 			default:
-				// code...
 				break;
 		}
 
